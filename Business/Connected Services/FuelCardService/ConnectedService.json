@@ -1,0 +1,18 @@
+{
+  "ExtendedData": {
+    "inputs": [
+      "https://yakitkartws.opetcloud.net/oykwsall/service.asmx?wsdl"
+    ],
+    "collectionTypes": [
+      "System.Collections.ArrayList",
+      "System.Collections.Generic.Dictionary`2"
+    ],
+    "messageContract": true,
+    "namespaceMappings": [
+      "*, FuelCardService"
+    ],
+    "sync": true,
+    "targetFramework": "net5.0",
+    "typeReuseMode": "All"
+  }
+}
