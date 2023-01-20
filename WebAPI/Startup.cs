@@ -1,15 +1,17 @@
+using Business.Abstract;
+using Business.Concrete;
+using Business.HangfireJobs;
+using DataAccess.Abstract;
+using DataAccess.Concrete;
+using Hangfire;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebAPI
 {
@@ -27,6 +29,29 @@ namespace WebAPI
         {
 
             services.AddControllers();
+
+            /* IOC */
+            // OTOBIL SALE
+            services.AddScoped<IOtobilService, OtobilManager>();
+            services.AddScoped<IOtobilSaleDal, OtobilSaleDal>();
+
+            // HANGFIRE
+            services.AddHangfire(configuration => configuration
+            .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+            .UseSimpleAssemblyNameTypeSerializer()
+            .UseRecommendedSerializerSettings()
+            .UseSqlServerStorage(Configuration.GetConnectionString("HangfireConnection"), new SqlServerStorageOptions
+            {
+                CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                QueuePollInterval = TimeSpan.Zero,
+                UseRecommendedIsolationLevel = true,
+                DisableGlobalLocks = true
+            }));
+
+            services.AddHangfireServer();
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPI", Version = "v1" });
@@ -34,7 +59,7 @@ namespace WebAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IOtobilService _otobilService)
         {
             if (env.IsDevelopment())
             {
@@ -51,6 +76,20 @@ namespace WebAPI
             {
                 endpoints.MapControllers();
             });
+
+            var dashboardOptions = new DashboardOptions
+            {
+                Authorization = new[]
+                {
+                    BasicAuthenticationFilter.Authorize(Configuration)
+                }
+            };
+
+            // HANGFIRE
+            app.UseHangfireDashboard("/hangfire", dashboardOptions);
+
+            // OtobilSalesAdd            
+            JobsHelper.RecurringJobs("OtobilSalesAdd", () => _otobilService.AddOtobilSales("2023-01-19", "2023-01-20"), Cron.Daily(01, 00));
         }
     }
 }
