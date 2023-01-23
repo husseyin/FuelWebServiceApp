@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpPost("getotobilsales")]
+        [HttpGet("getotobilsales")]
         public IActionResult GetOtobilSales(string fromDate, string toDate)
         {
             var result = _otobilService.GetOtobilSales(fromDate, toDate);
