@@ -1,6 +1,7 @@
 ﻿using Core.Utilities.Results.DataResult;
 using Core.Utilities.Results.OperationResult;
 using Entities.Concrete;
+using FuelCardService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
