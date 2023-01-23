@@ -38,7 +38,7 @@ namespace Business.Concrete
                     {
                         Password = _fuelCardLoginOptions.Password,
                         UserName = _fuelCardLoginOptions.UserName,
-                        UserSubCode = _fuelCardLoginOptions.UserSubCode
+                        UserSubCode = _fuelCardFirmTxnOptions.UserSubCode
                     }
                 }
             };
@@ -61,9 +61,9 @@ namespace Business.Concrete
                         EndDate = endDate,
                         FirmNo = _fuelCardFirmTxnOptions.FirmNo,
                         MerchantNo = _fuelCardFirmTxnOptions.MerchantNo,
-                        Password = "",
+                        Password = _fuelCardLoginOptions.Password,
                         StartDate = startDate,
-                        UserName = "",
+                        UserName = _fuelCardLoginOptions.UserName,
                         UserSubCode = _fuelCardFirmTxnOptions.UserSubCode
                     }
                 }

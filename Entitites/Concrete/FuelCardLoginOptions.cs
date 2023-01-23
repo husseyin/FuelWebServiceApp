@@ -10,6 +10,5 @@ namespace Entities.Concrete
     {
         public string UserName { get; set; }
         public string Password { get; set; }
-        public int UserSubCode { get; set; }
     }
 }
