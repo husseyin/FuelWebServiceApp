@@ -31,9 +31,15 @@ namespace WebAPI
             services.AddControllers();
 
             /* IOC */
+
             // OTOBIL SALE
             services.AddScoped<IOtobilService, OtobilManager>();
             services.AddScoped<IOtobilSaleDal, OtobilSaleDal>();
+
+            // FUELCARD FIRMTXN
+            services.AddScoped<IFuelCardFirmTxnService, FuelCardFirmTxnManager>();
+            services.AddScoped<IFuelCardFirmTxnDal, FuelCardFirmTxnDal>();
+
 
             // HANGFIRE
             services.AddHangfire(configuration => configuration
