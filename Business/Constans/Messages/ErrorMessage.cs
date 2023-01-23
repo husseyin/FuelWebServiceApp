@@ -12,5 +12,9 @@ namespace Business.Constans.Messages
         // OTOBIL SALE
         public static string OtobilSaleListError = "Satış listeleme hatası!";
         public static string OtobilSalesAddErorr = "Otobil satış ekleme hatası!";
+
+        // FUELCARD FIRMTXN
+        public static string FuelCardFirmTxnListError = "Yakıt kart detay listeleme hatası!";
+        public static string FuelCardFirmTxnAddErorr = "Yakıt kart detay ekleme hatası!";
     }
 }

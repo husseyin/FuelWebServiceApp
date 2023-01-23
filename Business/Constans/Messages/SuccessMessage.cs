@@ -12,5 +12,9 @@ namespace Business.Constans.Messages
         // OTOBIL SALE
         public static string OtobilSalesListed = "Otobil satışları listelendi.";
         public static string OtobilSalesAdded = "Otobil satışları eklendi.";
+
+        // FUELCARD FIRMTXN
+        public static string FuelCardFirmTxnListed = "Yakıt kart detayları listelendi.";
+        public static string FuelCardFirmTxnAdded = "Yakıt kart detayları eklendi.";
     }
 }
