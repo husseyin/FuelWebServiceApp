@@ -16,21 +16,41 @@ namespace Business.Concrete
     public class FuelCardFirmTxnManager : IFuelCardFirmTxnService
     {
         ServiceSoapClient _client = new ServiceSoapClient(ServiceSoapClient.EndpointConfiguration.ServiceSoap);
-
+        public IConfiguration Configuration { get; }
+        private FuelCardLoginOptions _fuelCardLoginOptions;
+        private FuelCardFirmTxnOptions _fuelCardFirmTxnOptions;
         IFuelCardFirmTxnDal _fuelCardFirmTxnDal;
-        public FuelCardFirmTxnManager(IFuelCardFirmTxnDal fuelCardFirmTxnDal)
+        public FuelCardFirmTxnManager(IConfiguration configuration, IFuelCardFirmTxnDal fuelCardFirmTxnDal)
         {
+            Configuration = configuration;
+            _fuelCardLoginOptions = Configuration.GetSection("FuelCardLoginOptions").Get<FuelCardLoginOptions>();
+            _fuelCardFirmTxnOptions = Configuration.GetSection("FuelCardFirmTxnOptions").Get<FuelCardFirmTxnOptions>();
             _fuelCardFirmTxnDal = fuelCardFirmTxnDal;
         }
 
         public IResult AddFuelCardFirmTxns(string startDate, string endDate)
         {
-            throw new NotImplementedException();
+            LoginRequest loginRequest = new LoginRequest()
+            {
+                Body = new LoginRequestBody
+                {
+                    input = new LoginIn
+                    {
+                        Password = _fuelCardLoginOptions.Password,
+                        UserName = _fuelCardLoginOptions.UserName,
+                        UserSubCode = _fuelCardLoginOptions.UserSubCode
+                    }
+                }
+            };
+
+            var result = _client.Login(loginRequest);
+
+            return null;
         }
 
         public IDataResult<List<FuelCardFirmTxnModel>> GetFuelCardFirmTxns(string startDate, string endDate)
         {
-            FirmTxnDetail1Request request = new FirmTxnDetail1Request
+            FirmTxnDetail1Request txnRequest = new FirmTxnDetail1Request
             {
                 Body = new FirmTxnDetail1RequestBody
                 {
@@ -39,17 +59,17 @@ namespace Business.Concrete
                         CardNo = "",
                         CustomerName = "",
                         EndDate = endDate,
-                        FirmNo = 0,
-                        MerchantNo = 0,
+                        FirmNo = _fuelCardFirmTxnOptions.FirmNo,
+                        MerchantNo = _fuelCardFirmTxnOptions.MerchantNo,
                         Password = "",
                         StartDate = startDate,
                         UserName = "",
-                        UserSubCode = 0
+                        UserSubCode = _fuelCardFirmTxnOptions.UserSubCode
                     }
                 }
             };
 
-            var result = _client.FirmTxnDetail1(request).Body.FirmTxnDetail1Result;
+            var result = _client.FirmTxnDetail1(txnRequest).Body.FirmTxnDetail1Result;
 
             return null;
         }
