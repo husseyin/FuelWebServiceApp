@@ -15,5 +15,7 @@ namespace DataAccess.Contexts
         
         public DbSet<OtobilSaleModel> OtobilSales { get; set; }
         public DbSet<FuelCardFirmTxnModel> FuelCardFirmTxns { get; set; }
+        public DbSet<VehicleRogSaleTransModel> VehicleRogSalesTrans { get; set; }
+
     }
 }
