@@ -16,5 +16,9 @@ namespace Business.Constans.Messages
         // FUELCARD FIRMTXN
         public static string FuelCardFirmTxnListed = "Yakıt kart detayları listelendi.";
         public static string FuelCardFirmTxnAdded = "Yakıt kart detayları eklendi.";
+
+        // VEHICLEROG SALETRANS
+        public static string VehicleRogSaleTransListed = "Taşıt tanıma işlemleri listelendi.";
+        public static string VehicleRogSaleTransAdded = "Taşıt tanıma işlemleri eklendi.";
     }
 }

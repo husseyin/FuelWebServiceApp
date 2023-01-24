@@ -16,5 +16,9 @@ namespace Business.Constans.Messages
         // FUELCARD FIRMTXN
         public static string FuelCardFirmTxnListError = "Yakıt kart detay listeleme hatası!";
         public static string FuelCardFirmTxnAddErorr = "Yakıt kart detay ekleme hatası!";
+
+        // VEHICLEROG SALETRANS
+        public static string VehicleRogSaleTransListError = "Taşıt tanıma işlem listeleme hatası!";
+        public static string VehicleRogSaleTransAddErorr = "Taşıt tanıma işlem ekleme hatası!";
     }
 }
