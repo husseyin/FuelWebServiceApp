@@ -10,11 +10,11 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FuelCardFirmTxnController : ControllerBase
+    public class FuelCardController : ControllerBase
     {
         IFuelCardFirmTxnService _fuelCardFirmTxnService;
 
-        public FuelCardFirmTxnController(IFuelCardFirmTxnService fuelCardFirmTxnService)
+        public FuelCardController(IFuelCardFirmTxnService fuelCardFirmTxnService)
         {
             _fuelCardFirmTxnService = fuelCardFirmTxnService;
         }
@@ -30,7 +30,7 @@ namespace WebAPI.Controllers
             return Ok(result);
         }
 
-        [HttpGet("addfuelcardfirmtxns")]
+        [HttpPost("addfuelcardfirmtxns")]
         public IActionResult AddFuelCardFirmTxns(string startDate, string endDate)
         {
             var result = _fuelCardFirmTxnService.AddFuelCardFirmTxns(startDate, endDate);

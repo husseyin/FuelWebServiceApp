@@ -40,6 +40,10 @@ namespace WebAPI
             services.AddScoped<IFuelCardFirmTxnService, FuelCardFirmTxnManager>();
             services.AddScoped<IFuelCardFirmTxnDal, FuelCardFirmTxnDal>();
 
+            // VEHICLEROG SALETRANS
+            services.AddScoped<IVehicleRogSaleTransService, VehicleRogSaleTransManager>();
+            services.AddScoped<IVehicleRogSaleTransDal, VehicleRogSaleTransDal>();
+
 
             // HANGFIRE
             services.AddHangfire(configuration => configuration
@@ -65,7 +69,7 @@ namespace WebAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IOtobilService _otobilService, IFuelCardFirmTxnService _fuelCardFirmTxnService)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IOtobilService _otobilService, IFuelCardFirmTxnService _fuelCardFirmTxnService, IVehicleRogSaleTransService _vehicleRogSaleTransService)
         {
             if (env.IsDevelopment())
             {
@@ -99,6 +103,9 @@ namespace WebAPI
 
             // FuelCardFirmTxnAdd
             JobsHelper.RecurringJobs("FuelCardFirmTxnAdd", () => _fuelCardFirmTxnService.AddFuelCardFirmTxns("2023-01-20", "2023-01-20"), Cron.Daily(01, 00));
+
+            // VehicleRogSaleTransAdd
+            JobsHelper.RecurringJobs("VehicleRogSaleTransAdd", () => _vehicleRogSaleTransService.AddVehicleRogSaleTrans("2023-01-20", "2023-01-20"), Cron.Daily(01, 00));
         }
     }
 }
