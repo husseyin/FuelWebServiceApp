@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entities.Concrete
 {
-    public class FuelCardFirmTxnOptions
+    public class FuelCardSettings : WebServiceLoginModel
     {
         public int FirmNo { get; set; }
         public int MerchantNo { get; set; }

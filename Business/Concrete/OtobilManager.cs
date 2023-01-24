@@ -20,14 +20,12 @@ namespace Business.Concrete
     {
         ReportsSoapClient _client = new ReportsSoapClient(ReportsSoapClient.EndpointConfiguration.ReportsSoap);
         public IConfiguration Configuration { get; }
-        private OtobilLoginOptions _otobilLoginOptions;
-        private OtobilFleetOptions _otobilFleetOptions;
+        private OtobilSettings _otobilSettings;
         IOtobilSaleDal _otobilSaleDal;
         public OtobilManager(IConfiguration configuration, IOtobilSaleDal otobilSaleDal)
         {
             Configuration = configuration;
-            _otobilLoginOptions = Configuration.GetSection("OtobilLoginOptions").Get<OtobilLoginOptions>();
-            _otobilFleetOptions = Configuration.GetSection("OtobilFleetOptions").Get<OtobilFleetOptions>();
+            _otobilSettings = Configuration.GetSection("OtobilSettings").Get<OtobilSettings>();
             _otobilSaleDal = otobilSaleDal;
         }
 
@@ -59,7 +57,7 @@ namespace Business.Concrete
 
             SalesRequest salesRequest = new SalesRequest
             {
-                fleetCode = _otobilFleetOptions.FleetCode,
+                fleetCode = _otobilSettings.FleetCode,
                 fromDate = _fromDate,
                 toDate = _toDate,
                 tokenKey = _otobilLogin.Data
@@ -108,8 +106,8 @@ namespace Business.Concrete
         {
             LoginRequest loginRequest = new LoginRequest
             {
-                userName = _otobilLoginOptions.UserName,
-                password = _otobilLoginOptions.Password
+                userName = _otobilSettings.UserName,
+                password = _otobilSettings.Password
             };
 
             string _tokenKey = _client.Login(loginRequest).LoginResult;

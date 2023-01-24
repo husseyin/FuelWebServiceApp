@@ -5,6 +5,7 @@ using Core.Utilities.Results.DataResult;
 using Core.Utilities.Results.OperationResult;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,13 @@ namespace Business.Concrete
     public class VehicleRogSaleTransManager : IVehicleRogSaleTransService
     {
         TTSWebServicesSoapClient client = new TTSWebServicesSoapClient(TTSWebServicesSoapClient.EndpointConfiguration.TTSWebServicesSoap);
+        public IConfiguration Configuration { get; }
+        private VehicleRogSettings _vehicleRogSettings;
         IVehicleRogSaleTransDal _vehicleRogSaleTransDal;
-        public VehicleRogSaleTransManager(IVehicleRogSaleTransDal vehicleRogSaleTransDal)
+        public VehicleRogSaleTransManager(IConfiguration configuration, IVehicleRogSaleTransDal vehicleRogSaleTransDal)
         {
+            Configuration = configuration;
+            _vehicleRogSettings = Configuration.GetSection("VehicleRogSettings").Get<VehicleRogSettings>();
             _vehicleRogSaleTransDal = vehicleRogSaleTransDal;
         }
 
@@ -47,16 +52,16 @@ namespace Business.Concrete
 
             GetCustomerSalesTransactionRequest requestSale = new GetCustomerSalesTransactionRequest()
             {
-                branch_code = "",
+                branch_code = _vehicleRogSettings.BranchCode,
                 customer_reference = "",
-                cust_code = "",
+                cust_code = _vehicleRogSettings.CustCode,
                 department_code = "",
                 invoice_number = "",
-                password = "",
+                password = _vehicleRogSettings.Password,
                 plate_code = "",
                 report_end_dt = _endDate,
                 report_start_dt = _startDate,
-                user_id = ""
+                user_id = _vehicleRogSettings.UserName
             };
 
             var result = client.GetCustomerSalesTransaction(requestSale).GetCustomerSalesTransactionResult;

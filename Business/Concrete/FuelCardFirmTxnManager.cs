@@ -19,14 +19,12 @@ namespace Business.Concrete
     {
         ServiceSoapClient _client = new ServiceSoapClient(ServiceSoapClient.EndpointConfiguration.ServiceSoap);
         public IConfiguration Configuration { get; }
-        private FuelCardLoginOptions _fuelCardLoginOptions;
-        private FuelCardFirmTxnOptions _fuelCardFirmTxnOptions;
+        private FuelCardSettings _fuelCardSettings;
         IFuelCardFirmTxnDal _fuelCardFirmTxnDal;
         public FuelCardFirmTxnManager(IConfiguration configuration, IFuelCardFirmTxnDal fuelCardFirmTxnDal)
         {
             Configuration = configuration;
-            _fuelCardLoginOptions = Configuration.GetSection("FuelCardLoginOptions").Get<FuelCardLoginOptions>();
-            _fuelCardFirmTxnOptions = Configuration.GetSection("FuelCardFirmTxnOptions").Get<FuelCardFirmTxnOptions>();
+            _fuelCardSettings = Configuration.GetSection("FuelCardSettings").Get<FuelCardSettings>();
             _fuelCardFirmTxnDal = fuelCardFirmTxnDal;
         }
 
@@ -61,12 +59,12 @@ namespace Business.Concrete
                         CardNo = "",
                         CustomerName = "",
                         EndDate = _endDate.ToString(),
-                        FirmNo = _fuelCardFirmTxnOptions.FirmNo,
-                        MerchantNo = _fuelCardFirmTxnOptions.MerchantNo,
-                        Password = _fuelCardLoginOptions.Password,
+                        FirmNo = _fuelCardSettings.FirmNo,
+                        MerchantNo = _fuelCardSettings.MerchantNo,
+                        Password = _fuelCardSettings.Password,
                         StartDate = _startDate.ToString(),
-                        UserName = _fuelCardLoginOptions.UserName,
-                        UserSubCode = _fuelCardFirmTxnOptions.UserSubCode
+                        UserName = _fuelCardSettings.UserName,
+                        UserSubCode = _fuelCardSettings.UserSubCode
                     }
                 }
             };
