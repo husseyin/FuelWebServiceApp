@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Entities.Concrete
 {
-    public class VehicleRogSalesTransModel
+    public class VehicleRogSaleTransModel
     {
         public int Id { get; set; }
         public string SalesType { get; set; }
