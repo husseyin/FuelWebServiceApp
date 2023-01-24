@@ -65,7 +65,7 @@ namespace WebAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IOtobilService _otobilService)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IOtobilService _otobilService, IFuelCardFirmTxnService _fuelCardFirmTxnService)
         {
             if (env.IsDevelopment())
             {
@@ -96,6 +96,9 @@ namespace WebAPI
 
             // OtobilSalesAdd            
             JobsHelper.RecurringJobs("OtobilSalesAdd", () => _otobilService.AddOtobilSales("2023-01-19", "2023-01-20"), Cron.Daily(01, 00));
+
+            // FuelCardFirmTxnAdd
+            JobsHelper.RecurringJobs("FuelCardFirmTxnAdd", () => _fuelCardFirmTxnService.AddFuelCardFirmTxns("2023-01-20", "2023-01-20"), Cron.Daily(01, 00));
         }
     }
 }

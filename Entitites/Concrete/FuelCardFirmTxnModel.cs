@@ -23,6 +23,6 @@ namespace Entities.Concrete
         public int PumpNo { get; set; }
         public string ProductName { get; set; }
         public string PlateNo { get; set; }
-
+        public decimal UnitPrice { get; set; }
     }
 }

@@ -49,6 +49,9 @@ namespace Business.Concrete
 
         public IDataResult<List<FuelCardFirmTxnModel>> GetFuelCardFirmTxns(string startDate, string endDate)
         {
+            DateTime _startDate = DateTime.Parse(startDate);
+            DateTime _endDate = DateTime.Parse(endDate);
+
             FirmTxnDetail1Request txnRequest = new FirmTxnDetail1Request
             {
                 Body = new FirmTxnDetail1RequestBody
@@ -57,11 +60,11 @@ namespace Business.Concrete
                     {
                         CardNo = "",
                         CustomerName = "",
-                        EndDate = endDate,
+                        EndDate = _endDate.ToString(),
                         FirmNo = _fuelCardFirmTxnOptions.FirmNo,
                         MerchantNo = _fuelCardFirmTxnOptions.MerchantNo,
                         Password = _fuelCardLoginOptions.Password,
-                        StartDate = startDate,
+                        StartDate = _startDate.ToString(),
                         UserName = _fuelCardLoginOptions.UserName,
                         UserSubCode = _fuelCardFirmTxnOptions.UserSubCode
                     }
@@ -89,7 +92,8 @@ namespace Business.Concrete
                     ProductName = txnDetail.ProductName,
                     PumpNo = int.Parse(txnDetail.PumpNo),
                     TrxID = txnDetail.TrxID,
-                    Volume = txnDetail.Volume
+                    Volume = txnDetail.Volume,
+                    UnitPrice = txnDetail.Amount / txnDetail.Volume
                 });
             }
 
